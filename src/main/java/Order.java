@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -6,10 +7,17 @@ import java.util.Date;
 public class Order {
     private int orderNumber;
     private Date latestStartDate;
+    private Worker[] workers;
 
     public Order(int orderNumber, Date latestStartDate) {
         this.orderNumber = orderNumber;
         this.latestStartDate = latestStartDate;
+    }
+
+    public Order(int orderNumber, Date latestStartDate, Worker[] workers) {
+        this.orderNumber = orderNumber;
+        this.latestStartDate = latestStartDate;
+        this.workers = workers;
     }
 
     public int getOrderNumber() {
@@ -20,11 +28,16 @@ public class Order {
         return latestStartDate;
     }
 
+    public Worker[] getWorkers() {
+        return workers;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "orderNumber=" + orderNumber +
                 ", latestStartDate=" + latestStartDate +
+                ", workers=" + Arrays.toString(workers) +
                 '}';
     }
 }

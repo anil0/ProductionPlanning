@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by anil on 27/02/2017.
@@ -12,6 +13,10 @@ public class Day {
     Order[] order;
     int weekNum;
     Worker[] workers;
+
+    List<Foo> foo = new ArrayList<>();
+
+
 //    String dayName;
 //    Order order;
 
@@ -77,10 +82,19 @@ public class Day {
         return workers;
     }
 
+
+    public List<Foo> getFoo() {
+        return foo;
+    }
+
+    public void setFoo(List<Foo> foo) {
+        this.foo = foo;
+    }
+
     @Override
     public String toString() {
         return "Day: " + date +
                 "\t" + weekNum +
-                "\t order = " + Arrays.toString(order);
+                "\t order = " + foo;
     }
 }
