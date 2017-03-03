@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * Created by anilrahman on 01/03/2017.
  */
-public class Foo
+public class Foo implements Serializable
 {
     private int orderId;
     private int week;

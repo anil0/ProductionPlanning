@@ -23,4 +23,13 @@ public class Worker {
     public boolean isOnHoliday() {
         return isOnHoliday;
     }
+
+    @Override
+    public String toString() {
+        return "Worker{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", isOnHoliday=" + isOnHoliday +
+                '}';
+    }
 }
