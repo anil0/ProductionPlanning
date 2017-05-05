@@ -7,6 +7,18 @@
     <groupId>co.uk.anil</groupId>
     <artifactId>ProductionPlanning</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
@@ -20,5 +32,18 @@
             <artifactId>guava</artifactId>
             <version>21.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.lightcouch/lightcouch -->
+        <dependency>
+            <groupId>org.lightcouch</groupId>
+            <artifactId>lightcouch</artifactId>
+            <version>0.1.8</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
     </dependencies>
 </project>

@@ -7,6 +7,7 @@ public class Order {
     private int orderNumber;
     private String latestStartDate;
     private Worker workers;
+    private OrderDB orderDB;
 
     public Order(int orderNumber, String latestStartDate) {
         this.orderNumber = orderNumber;
@@ -17,6 +18,11 @@ public class Order {
         this.orderNumber = orderNumber;
         this.latestStartDate = latestStartDate;
         this.workers = workers;
+    }
+
+    public Order(OrderDB orderDB, String latestStartDate) {
+        this.orderDB = orderDB;
+        this.latestStartDate = latestStartDate;
     }
 
     public int getOrderNumber() {
@@ -31,10 +37,18 @@ public class Order {
         return workers;
     }
 
+    public OrderDB getOrderDB() {
+        return orderDB;
+    }
+
+    public void setOrderDB(OrderDB orderDB) {
+        this.orderDB = orderDB;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
-                "orderNumber=" + orderNumber +
+                "orderDB=" + orderDB +
                 ", latestStartDate=" + latestStartDate +
                 '}';
     }

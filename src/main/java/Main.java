@@ -1,8 +1,10 @@
+import javax.swing.plaf.ColorChooserUI;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,6 +24,8 @@ public class Main
     private static List<List<Order>> listOrders = new LinkedList<>();
     private static List<Order> faultList = new ArrayList<>();
     private final static List<Worker> workerList = new ArrayList<>();
+    private List<OrderDB> newListOrders = new ArrayList<>();
+
     static
     {
         //foo list
@@ -95,6 +99,13 @@ public class Main
 
     public Main()
     {
+        CouchDB couchDB = new CouchDB();
+        couchDB.showView();
+        newListOrders = couchDB.getOrderListFromMaterials();
+
+        //sort the list based on week number of order
+        Collections.sort(newListOrders, (p1, p2) -> p1.getWeekNum() - p2.getWeekNum());
+
         showMenu();
     }
 
@@ -118,7 +129,7 @@ public class Main
                 {
                     case 1:
                         System.out.println("show schedule");
-                        createScheduler();
+                        createScheduler2();
                         showMenu();
                         break;
                     case 2:
@@ -383,8 +394,128 @@ public class Main
         }
     }
 
+    private void createScheduler2()
+    {
+        int numOfOrders = 12;
+        int weekOneOrders = 3;//2;
+        int weekTwoOrders = 6;
+        int weekThreeOrders = 3;//4;
 
-    //Attempt at automated scheduler, almost working
+        ArrayList<Order> weekOne = new ArrayList<>();
+        weekOne.add( new Order( newListOrders.get(0), "1/05/2017" ) );
+        weekOne.add( new Order( newListOrders.get(1), "3/05/2017" ) );
+        weekOne.add( new Order( newListOrders.get(2), "5/05/2017" ) );
+
+        ArrayList<Order> weekTwo = new ArrayList<>();
+        weekTwo.add( new Order( newListOrders.get(3), "7/05/2017" ) );
+        weekTwo.add( new Order( newListOrders.get(4), "9/05/2017" ) );
+        weekTwo.add( new Order( newListOrders.get(5), "11/05/2017" ) );
+        weekTwo.add( new Order( newListOrders.get(6), "13/05/2017" ) );
+        weekTwo.add( new Order( newListOrders.get(7), "15/05/2017" ) );
+        weekTwo.add( new Order( newListOrders.get(8), "17/05/2017" ) );
+
+        ArrayList<Order> weekThree = new ArrayList<>();
+
+        weekThree.add( new Order( newListOrders.get(9), "19/05/2017" ) );
+        weekThree.add( new Order( newListOrders.get(10), "21/05/2017" ) );
+        weekThree.add( new Order( newListOrders.get(11), "23/05/2017" ) );
+
+        List<Day> daysList = new ArrayList<>();
+
+        Calendar cal = Calendar.getInstance();
+        cal.set( Calendar.DAY_OF_MONTH, 1 );
+        int monthMaxDays = cal.getActualMaximum( Calendar.DAY_OF_MONTH );
+        //int weekNumber = cal.get(Calendar.WEEK_OF_MONTH);
+
+        int daysOfMonthLeft = monthMaxDays - numOfOrders;
+
+        //week 1
+        for (int i = 0; i < weekOneOrders; i++)
+        {
+            int weekNum = cal.get(Calendar.WEEK_OF_MONTH);
+            if(weekNum == 1)
+            {
+                List<Order> tempDayOrders = new ArrayList<>();
+                tempDayOrders.add(weekOne.get(i));
+                //date, week, orderarray
+                daysList.add(new Day(cal.getTime(), weekNum, tempDayOrders));
+                cal.add(Calendar.DATE, 1);
+            }
+
+        }
+
+        //skip days to week 2
+        for (int i = 0; i < 20; i++)
+        {
+            int weekNumber = cal.get(Calendar.WEEK_OF_MONTH);
+            cal.add(Calendar.DATE, 1);
+
+            if(weekNumber == 2)
+            {
+                break;
+            }
+        }
+
+        //week 2
+        for (int i = 0; i < weekTwoOrders; i++)
+        {
+            int weekNum = cal.get(Calendar.WEEK_OF_MONTH);
+            if(weekNum == 2)
+            {
+                List<Order> tempDayOrders = new ArrayList<>();
+                tempDayOrders.add(weekTwo.get(0));
+                weekTwo.remove(0);
+                //date, week, orderarray
+                daysList.add(new Day(cal.getTime(), weekNum, tempDayOrders));
+                cal.add(Calendar.DATE, 1);
+                //System.out.println();
+            }
+        }
+
+        //skip days to week 3
+        for (int i = 0; i < 20; i++)
+        {
+            int weekNumber = cal.get(Calendar.WEEK_OF_MONTH);
+            cal.add(Calendar.DATE, 1);
+
+            if(weekNumber == 3)
+            {
+                break;
+            }
+        }
+
+        //week 3
+        for (int i = 0; i < weekThreeOrders; i++)
+        {
+            int weekNum = cal.get(Calendar.WEEK_OF_MONTH);
+            if(weekNum == 3)
+            {
+                List<Order> tempDayOrders = new ArrayList<>();
+                tempDayOrders.add(weekThree.get(0));
+                weekThree.remove(0);
+
+                daysList.add( new Day( cal.getTime(), weekNum, tempDayOrders ) );
+                cal.add( Calendar.DATE, 1 );
+
+            }
+        }
+
+        System.out.println("-----------------Schedule--------------");
+        System.out.println("Week 1: " + weekOneOrders + " orders");
+        System.out.println("Week 2: " + weekTwoOrders + " orders");
+        System.out.println("Week 3: " + weekThreeOrders + " orders\n");
+
+        for (Day day : daysList)
+        {
+            System.out.println(day);
+        }
+    }
+
+    public List<OrderDB> getNewListOrders() {
+        return newListOrders;
+    }
+
+//Attempt at automated scheduler, almost working
 //    private static void createSchedule()
 //    {
 //        //5 bikes a day
