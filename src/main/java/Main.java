@@ -280,10 +280,25 @@ public class Main
 
     private void createScheduler()
     {
-        int numOfOrders = 12;
-        int weekOneOrders = 2;
-        int weekTwoOrders = 6;
-        int weekThreeOrders = 4;
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("How many orders for this month?");
+        int numOfOrders = scanner.nextInt();
+
+        System.out.println("How many orders for Week 1?");
+        int weekOneOrders = scanner.nextInt();
+
+        System.out.println("How many orders for Week 2?");
+        int weekTwoOrders = scanner.nextInt();
+
+        System.out.println("How many orders for Week 3?");
+        int weekThreeOrders = scanner.nextInt();
+
+        //int numOfOrders = 12;
+//        int weekOneOrders = 2;
+//        int weekTwoOrders = 6;
+//        int weekThreeOrders = 4;
 
         ArrayList<Order> weekOne = new ArrayList<>();
         weekOne.add( new Order( 0, "1/03/2017" ) );
